@@ -122,3 +122,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 add_subdirectory(src)
 add_subdirectory(tools)
+
+file(COPY ${CMAKE_SOURCE_DIR}/scripts/
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/output/bin/
+     FILES_MATCHING
+     PATTERN "*.sh"
+     )
