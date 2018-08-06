@@ -1,0 +1,22 @@
+syntax="proto2";
+option cc_generic_services = true;
+
+message HttpRequest {};
+message HttpResponse {};
+
+service HttpStreamingService {
+  rpc stream_flv(HttpRequest) returns (HttpResponse);
+  rpc stream_ts(HttpRequest) returns (HttpResponse);
+  rpc get_media_playlist(HttpRequest) returns (HttpResponse);
+  rpc get_master_playlist(HttpRequest) returns (HttpResponse);
+  rpc get_crossdomain_xml(HttpRequest) returns (HttpResponse);
+  rpc play_hls(HttpRequest) returns (HttpResponse);
+  rpc get_hls_min(HttpRequest) returns (HttpResponse);
+  rpc get_cdn_probe(HttpRequest) returns (HttpResponse); 
+};
+
+service MonitoringService {
+  rpc monitor(HttpRequest) returns (HttpResponse);
+  rpc players(HttpRequest) returns (HttpResponse);
+  rpc urls(HttpRequest) returns (HttpResponse);
+};
