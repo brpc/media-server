@@ -1974,7 +1974,7 @@ void print_player_stats(const std::string& key,
                         const PlayerInfo* info,
                         butil::FlatMap<PlayerEntry, PlayerStates>* last_player_states_map,
                         std::vector<std::pair<PlayerEntry, PlayerStates>>* new_ps_to_insert) {
-    if (typeid(*(info->stream.get())) == typeid(TsQueue)) {
+    if (dynamic_cast<TsQueue*>(info->stream.get())) {
         return;
     }
     const PlayerEntry player_entry = {info, info->stream->create_realtime_us()};
@@ -2002,11 +2002,11 @@ void print_player_stats(const std::string& key,
        (cur_player_states.sent_video_frames - last_player_states.sent_video_frames) / time_elapsed;
     size_t score = get_score(expected_framerate, video_frames_per_second);
     std::string play_type;
-    if (typeid(*(info->stream.get())) == typeid(RtmpForwarder)) {
+    if (dynamic_cast<RtmpForwarder*>(info->stream.get())) {
         play_type = "play stats, ";
-    } else if (typeid(*(info->stream.get())) == typeid(PublishProxy)) {
+    } else if (dynamic_cast<PublishProxy*>(info->stream.get())) {
         play_type = "forward stats, ";
-    } else if (typeid(*(info->stream.get())) == typeid(FlvDownloader)) {
+    } else if (dynamic_cast<FlvDownloader*>(info->stream.get())) {
         play_type = "play_flv stats, ";
     } 
     LOG(INFO) << "[CONN_STATS]"

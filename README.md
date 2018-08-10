@@ -6,17 +6,19 @@ media-server is an industrial-grade live streaming server based on [brpc](https:
 
 * Support [origin server](docs/cn/origin_server.md) which streams can be pushed to and played from
 * Support [proxy server](docs/cn/proxy_server.md) to proxy push/pull requests
-* Support [rtmp](https://github.com/brpc/brpc/blob/master/src/brpc/rtmp.h)/[flv](https://en.wikipedia.org/wiki/Flash_Video)/[hls](https://en.wikipedia.org/wiki/HTTP_Live_Streaming) play
+* Support [rtmp](https://www.adobe.com/devnet/rtmp.html)/[flv](https://en.wikipedia.org/wiki/Flash_Video)/[hls](https://en.wikipedia.org/wiki/HTTP_Live_Streaming) play
 * Support rtmp push
+* Streams are uniquely determined by [vhost/app/stream_name](docs/cn/vhost_app_stream.md)
 * Configurable push/pull [retry policy](docs/cn/retry_policy.md)
 * Support simplified rtmp protocol that eliminate rtmp handshake process
 * Support [visual interface](docs/cn/http_service.md)(via http) to check the status of the current server/streams
 * Support low latency hls(about one second slower than rtmp/flv)
 * Support video/audio only live streaming
-* Configurable frame queue buffer length(typically several seconds)
+* Configurable [frame queue buffer](docs/cn/frame_queue.md) length(typically several seconds)
 * Support keep pulling streams for several seconds when no players are watching
 * Support dumping streams status into log for monitoring purpose
 * Support play/publish event log which can be used for charging purpose
+* Support different [re-publish policy](docs/cn/republish_policy.md)
 * All features brought by [brpc](https://github.com/brpc/brpc)
 
 ## Getting Started
