@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.10)
 project(media_server C CXX)
 
-option(EXAMPLE_LINK_SO "Whether examples are linked dynamically" OFF)
+option(BRPC_LINK_SO "Whether brpc are linked dynamically" OFF)
 
 include(FindThreads)
 include(FindProtobuf)
@@ -12,7 +12,7 @@ find_library(GPERFTOOLS_LIBRARIES NAMES tcmalloc_and_profiler)
 include_directories(${GPERFTOOLS_INCLUDE_DIR})
 
 find_path(BRPC_INCLUDE_PATH NAMES brpc/server.h)
-if(EXAMPLE_LINK_SO)
+if(BRPC_LINK_SO)
     find_library(BRPC_LIB NAMES brpc)
 else()
     find_library(BRPC_LIB NAMES libbrpc.a brpc)
@@ -89,6 +89,7 @@ set(DYNAMIC_LIB
     ${SSL_LIB}
     ${CRYPTO_LIB}
     dl
+    ${GPERFTOOLS_LIBRARIES}
     )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")

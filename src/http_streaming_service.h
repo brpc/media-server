@@ -22,7 +22,7 @@
 #include "rtmp_forward_service.h"
 #include "ts_queue.h"
 #include <ifaddrs.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>       // std::shared_ptr
 
 // Convert RTMP stream to progressive downloading of FLV files.
 class FlvDownloader : public brpc::RtmpStreamBase {
@@ -166,13 +166,13 @@ public:
     // Will not be NULL when the content is TS.
     butil::intrusive_ptr<TsEntry>& ts_entry() { return _ts_entry; }
 
-    boost::shared_ptr<ControllerModifier>& controller_modifier() {
+    std::shared_ptr<ControllerModifier>& controller_modifier() {
         return _controller_modifier;
     }
-    boost::shared_ptr<ResponseHandler>& response_attachment_handler() {
+    std::shared_ptr<ResponseHandler>& response_attachment_handler() {
         return _response_attachment_handler;
     }
-    boost::shared_ptr<ResponseHandler>& failed_response_handler() {
+    std::shared_ptr<ResponseHandler>& failed_response_handler() {
         return _failed_response_handler;
     }
 
@@ -184,9 +184,9 @@ private:
     std::string _key;
     bool _progressive_body;
     butil::intrusive_ptr<TsEntry> _ts_entry;
-    boost::shared_ptr<ControllerModifier> _controller_modifier;
-    boost::shared_ptr<ResponseHandler> _response_attachment_handler;
-    boost::shared_ptr<ResponseHandler> _failed_response_handler;
+    std::shared_ptr<ControllerModifier> _controller_modifier;
+    std::shared_ptr<ResponseHandler> _response_attachment_handler;
+    std::shared_ptr<ResponseHandler> _failed_response_handler;
 };
 
 void remove_from_service(RtmpForwardService* forward_service,

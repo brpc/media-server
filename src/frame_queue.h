@@ -20,7 +20,7 @@
 #define MEDIA_SERVER_FRAME_QUEUE_H
 
 #include <deque>
-#include <boost/shared_ptr.hpp>
+#include <memory>       // std::shared_ptr
 #include "brpc/rtmp.h"
 
 enum FrameType {
@@ -56,9 +56,9 @@ struct Frame {
 
     // metadata/headers assoicated with this frame. This is set for all
     // frames so that new players coming are sent with these stuff first.
-    boost::shared_ptr<brpc::RtmpMetaData> metadata;
-    boost::shared_ptr<brpc::RtmpVideoMessage> avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> aac_seq_header;
+    std::shared_ptr<brpc::RtmpMetaData> metadata;
+    std::shared_ptr<brpc::RtmpVideoMessage> avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> aac_seq_header;
     
     Frame();
     Frame(brpc::RtmpVideoMessage& msg);
@@ -206,7 +206,7 @@ private:
     // in implementing min_cache_length and max_cache_length
     std::deque<const Frame*> _keyframes;
 
-    boost::shared_ptr<FrameQueueUserConfig> _user_config;
+    std::shared_ptr<FrameQueueUserConfig> _user_config;
 };
 
 class FrameCursor {

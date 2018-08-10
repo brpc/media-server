@@ -16,19 +16,19 @@
 // Authors: Ge,Jun (jge666@gmail.com)
 //          Jiashun Zhu(zhujiashun2010@gmail.com)
 
+#include <algorithm>
+#include <deque>
+#include <limits>
+#include <pthread.h>
+#include <memory>           // std::shared_ptr
 #include "brpc/server.h"    // StartDummyServerAt
 #include "brpc/socket.h"
 #include "brpc/channel.h"
 #include "brpc/adaptive_connection_type.h"
-#include <bthread/bthread.h>
+#include "bthread/bthread.h"
 #include "butil/logging.h"
 #include "butil/fast_rand.h"
 #include "butil/containers/flat_map.h"
-#include <algorithm>
-#include <deque>
-#include <limits>
-#include <boost/shared_ptr.hpp>
-#include <pthread.h>
 #include "rtmp_forward_service.h"
 #include "checksum.h"
 #include "scoped_sleep.h"
@@ -202,7 +202,7 @@ class RtmpPressPublisher : public brpc::RtmpRetryingClientStream {
 
 class RtmpPressPlayer : public brpc::RtmpRetryingClientStream {
 public:
-    RtmpPressPlayer(boost::shared_ptr<PublishPlayContext> publish_play_context,
+    RtmpPressPlayer(std::shared_ptr<PublishPlayContext> publish_play_context,
                     PublishResult* publish_result,
                     std::string stream)
         : _last_video_index(0)
@@ -250,7 +250,7 @@ private:
 private:
     int64_t _last_video_index;
     int64_t _last_audio_index;
-    boost::shared_ptr<PublishPlayContext> _publish_play_context;
+    std::shared_ptr<PublishPlayContext> _publish_play_context;
     PublishResult* _publish_result;
     int64_t _total_count;
     int64_t _error_count;
@@ -377,7 +377,7 @@ void RtmpPressPlayer::OnRawData(const butil::IOBuf& data,
 
 void* publish_thread(void* arg) {
     PublishResult* publish_result = (PublishResult *)arg;
-    boost::shared_ptr<PublishPlayContext> publish_play_context(new PublishPlayContext);
+    std::shared_ptr<PublishPlayContext> publish_play_context(new PublishPlayContext);
 
     // Initialize rtmp_push_client
     std::string push_server_addr = FLAGS_push_server;

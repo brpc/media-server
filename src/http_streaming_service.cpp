@@ -1,4 +1,4 @@
-v// Media Server - Host or proxy live multimedia streams.
+// Media Server - Host or proxy live multimedia streams.
 // Copyright (c) 2016 Baidu.com, Inc. All Rights Reserved
 //
 // Licensed under the Apache License, Version 2.0 (the "License");

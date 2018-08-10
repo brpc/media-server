@@ -17,6 +17,7 @@
 //          Jiashun Zhu(zhujiashun2010@gmail.com)
 
 #include <gflags/gflags.h>
+#include <memory>                           // std::shared_ptr
 #include "bthread/bthread.h"
 #include "bvar/bvar.h"
 #include "butil/endpoint.h"
@@ -31,7 +32,6 @@
 #include "brpc/socket_id.h"
 #include "brpc/socket.h"
 #include "brpc/redis.h"
-#include <boost/shared_ptr.hpp>
 #include "frame_queue.h"
 #include "rtmp_forward_service.h"
 #include "http_streaming_service.h"
@@ -111,9 +111,9 @@ struct PlayerInfo : public brpc::SharedObject {
     FrameCursor* cursor;
 
     // Save sent metadata/headers to avoid resending same stuff again.
-    boost::shared_ptr<brpc::RtmpMetaData> sent_metadata;
-    boost::shared_ptr<brpc::RtmpVideoMessage> sent_avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> sent_aac_seq_header;
+    std::shared_ptr<brpc::RtmpMetaData> sent_metadata;
+    std::shared_ptr<brpc::RtmpVideoMessage> sent_avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> sent_aac_seq_header;
     
     // stats
     size_t sent_video_messages;
@@ -374,10 +374,10 @@ protected:
     int64_t _first_video_message_delay;
     int64_t _first_aac_seq_header_delay;
     int64_t _first_audio_message_delay;
-    boost::shared_ptr<brpc::RtmpMetaData> _metadata;
+    std::shared_ptr<brpc::RtmpMetaData> _metadata;
     double _expected_framerate;
-    boost::shared_ptr<brpc::RtmpVideoMessage> _avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> _aac_seq_header;
+    std::shared_ptr<brpc::RtmpVideoMessage> _avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> _aac_seq_header;
     bool _audio_enabled;
     bool _video_enabled;
     bool _is_rtmp_user;
@@ -2282,7 +2282,7 @@ void PlayingClientSelector::StartGettingRtmpClient(
 
 static PullWay select_pull_way(const butil::StringPiece& key,
                                bool is_internal,
-                               boost::shared_ptr<QueryModifier>* modifier) {
+                               std::shared_ptr<QueryModifier>* modifier) {
     return PULL_BY_RTMP_INSIDE;
 }    
 
@@ -2384,7 +2384,7 @@ butil::Status RtmpForwardService::add_player(const std::string& key,
     butil::StringPiece app;
     butil::StringPiece stream_name;
     brpc::ParseRtmpURL(key, &vhost, NULL, NULL, &app, &stream_name);
-    boost::shared_ptr<QueryModifier> query_modifier;
+    std::shared_ptr<QueryModifier> query_modifier;
     PullWay pull_way = select_pull_way(key, options().internal_service, &query_modifier);
     VLOG(99) << "pull_way=" << pull_way;
     if (query_modifier) {
@@ -2911,9 +2911,9 @@ void MonitoringServiceImpl::players(
     FrameQueue::Stats fq_stats;
     players->frame_queue.get_stats(&fq_stats);
     butil::intrusive_ptr<RtmpForwarder> publisher = players->_publisher;
-    boost::shared_ptr<brpc::RtmpMetaData> saved_metadata;
-    boost::shared_ptr<brpc::RtmpVideoMessage> saved_avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> saved_aac_seq_header;
+    std::shared_ptr<brpc::RtmpMetaData> saved_metadata;
+    std::shared_ptr<brpc::RtmpVideoMessage> saved_avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> saved_aac_seq_header;
     int64_t publisher_create_time = 0;
     int64_t publish_delay = 0;
     int64_t first_avc_seq_header_delay = 0;

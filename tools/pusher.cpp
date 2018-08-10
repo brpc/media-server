@@ -53,13 +53,13 @@ private:
     Publisher* _publisher;
     FrameQueue _frame_queue;
     FrameCursor* _cursor;
-    boost::shared_ptr<brpc::RtmpMetaData> _metadata;
-    boost::shared_ptr<brpc::RtmpVideoMessage> _avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> _aac_seq_header;
+    std::shared_ptr<brpc::RtmpMetaData> _metadata;
+    std::shared_ptr<brpc::RtmpVideoMessage> _avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> _aac_seq_header;
     // Save sent metadata/headers to avoid resending same stuff again.
-    boost::shared_ptr<brpc::RtmpMetaData> _sent_metadata;
-    boost::shared_ptr<brpc::RtmpVideoMessage> _sent_avc_seq_header;
-    boost::shared_ptr<brpc::RtmpAudioMessage> _sent_aac_seq_header;
+    std::shared_ptr<brpc::RtmpMetaData> _sent_metadata;
+    std::shared_ptr<brpc::RtmpVideoMessage> _sent_avc_seq_header;
+    std::shared_ptr<brpc::RtmpAudioMessage> _sent_aac_seq_header;
     
     // used to control timestamp in metadata
     bool _reset_base_timestamp;
