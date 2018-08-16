@@ -34,7 +34,7 @@ mkdir build && cd build && cmake .. && make -sj4
 ```shell
 ./output/bin/media_server
 ```
-Then you can push stream or play stream from it.
+Then you can push/play stream from it.
 
 ### Main options
 

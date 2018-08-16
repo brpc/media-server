@@ -15,9 +15,9 @@ CDN节点内部的一致性哈希机器可以由`-cdn_merge_to`和`-cdn_merge_lb
 如果正常启动，会看到如下启动日志：
 
 > Server[media_server] is serving on port=8955 and internal_port=8954.
-> Check out http://BDSHYF000088024:8954 in web browser.
+> Check out http://127.0.0.1:8954 in web browser.
 > Server[media_server(cdn-merge)] is serving on port=7035.
-> Check out http://BDSHYF000088024:7035 in web browser.
+> Check out http://127.0.0.1:7035 in web browser.
 
 由于启动了两个service（接受请求的service和merge service），相关的日志打印了两遍。
 
