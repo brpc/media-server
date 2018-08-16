@@ -10,14 +10,13 @@ media-server is an industrial-grade live streaming server based on [brpc](https:
 * Support rtmp push
 * Streams are uniquely determined by [vhost/app/stream_name](docs/cn/vhost_app_stream.md)
 * Configurable push/pull [retry policy](docs/cn/retry_policy.md)
-* Support simplified rtmp protocol that eliminate rtmp handshake process
+* Support [simplified rtmp protocol](docs/cn/simplified_rtmp.md) that eliminate rtmp handshake process
 * Support [visual interface](docs/cn/http_service.md)(via http) to check the status of the current server/streams
-* Support low latency hls(about one second slower than rtmp/flv)
-* Support video/audio only live streaming
+* Support [low latency hls](docs/cn/low_latency_hls.md)(about one second slower than rtmp/flv)
+* Support [video/audio only](docs/cn/av_only.md) live streaming
 * Configurable [frame queue buffer](docs/cn/frame_queue.md) length(typically several seconds)
-* Support keep pulling streams for several seconds when no players are watching
-* Support dumping streams status into log for monitoring purpose
-* Support play/publish event log which can be used for charging purpose
+* Support [keep pulling](docs/cn/keep_pulling.md) streams for several seconds when no players are watching
+* Support dumping [stream status](docs/cn/stream_status.md) into log for monitoring purpose
 * Support different [re-publish policy](docs/cn/republish_policy.md)
 * All features brought by [brpc](https://github.com/brpc/brpc)
 
@@ -28,13 +27,13 @@ Supported operating system: Linux, MacOSX.
 * Install [brpc](https://github.com/brpc/brpc/blob/master/docs/cn/getting_started.md)  which is the main dependency of media-server
 * Compile media-server with cmake:
 ```shell
-mkdir build && cd build && cmake .. && make
+mkdir build && cd build && cmake .. && make -sj4
 ```
-* Run media-server(origin server) with minimum configuration(the default port is 8079):
+* Run media-server as origin server with minimum configuration(the default port is 8079):
 ```shell
 ./output/bin/media_server
 ```
-Then you can push stream to the server and play stream from it.
+Then you can push stream or play stream from it.
 
 ### Main options
 
