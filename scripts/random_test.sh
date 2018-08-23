@@ -1,6 +1,6 @@
 #!/bin/bash
 # random_test is a tool to check the sanity of media-server, including origin
-# server and proxy server. And it also checks the status of server, such as
+# server and edge server. And it also checks the status of server, such as
 # cpu and memory usage.
 # Author: Jiashun Zhu(zhujiashun2010@gmail.com)
 

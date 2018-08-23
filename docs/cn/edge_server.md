@@ -6,10 +6,10 @@ media-server可以在源站模式和代理模式下工作，这两种模式的�
 
 CDN节点内部的一致性哈希机器可以由`-cdn_merge_to`和`-cdn_merge_lb`指定，前者表明机器地址，可以写成名字服务的形式，后者表明选机器时的负载均衡算法。此时，`-proxy_to`和`-proxy_lb`用来设置merge service回源的真正地址，比如源站。
 
-`conf/proxy.conf`是代理模式下的配置示例，可以用如下方式启动源站：
+`conf/edge.conf`是代理模式下的配置示例，可以用如下方式启动源站：
 
 ```shell
-./media_server --flagfile=conf/proxy.conf
+./media_server --flagfile=conf/edge.conf
 ```
 
 如果正常启动，会看到如下启动日志：
@@ -21,4 +21,4 @@ CDN节点内部的一致性哈希机器可以由`-cdn_merge_to`和`-cdn_merge_lb
 
 由于启动了两个service（接受请求的service和merge service），相关的日志打印了两遍。
 
-通过推流工具（例如ffmpeg，或media-server提供的tools中的pusher）将流推到127.0.0.1:8955，此时media-server会将这条流推到配置文件中proxy_to指定的地址去。拉流也是类似的，会将拉流请求代理到proxy_to指定的地址。
+通过推流工具（例如ffmpeg，或media-server提供的tools中的pusher）将流推到127.0.0.1:8955，此时media-server会将这条流推到配置文件中`proxy_to`指定的地址。拉流也是类似的，会将拉流请求代理到`proxy_to`指定的地址。

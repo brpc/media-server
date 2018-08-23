@@ -5,7 +5,7 @@ media-server is an industrial-grade live streaming server based on [brpc](https:
 ## Main features
 
 * Support [origin server](docs/cn/origin_server.md) which streams can be pushed to and played from
-* Support [proxy server](docs/cn/proxy_server.md) to proxy push/pull requests
+* Support [edge server](docs/cn/edge_server.md) to proxy push/pull requests
 * Support [rtmp](https://www.adobe.com/devnet/rtmp.html)/[flv](https://en.wikipedia.org/wiki/Flash_Video)/[hls](https://en.wikipedia.org/wiki/HTTP_Live_Streaming) play
 * Support rtmp push
 * Streams are uniquely determined by [vhost/app/stream_name](docs/cn/vhost_app_stream.md)
@@ -57,7 +57,7 @@ Specifies the service port of media-server. Brpc is characterized by supporting 
 This port can be configured as a port that can only be accessed on the internal network. In this case, the -port port no longer provides built-in services, but will only be accessible through this port.
 
 * -retry_interval_ms
-When media-server runs in proxy mode, push and pull proxy requests will be retried when error happens until clients no longer need. This option specifies the minimum interval for continuous retry, which is 1 second by default.
+When media-server runs in edge mode, push and pull requests to upstreams will be retried when error happens until clients no longer need. This option specifies the minimum interval for continuous retry, which is 1 second by default.
 
 * -share_play_connection
 When set to true, multiple streams connected to the same server will reuse the same rtmp connection in play.
@@ -66,7 +66,7 @@ When set to true, multiple streams connected to the same server will reuse the s
 When set to true, multiple streams connected to the same server will reuse the same rtmp connection in publish.
 
 * -timeout_ms
-Timeout period for creating a stream when media-server runs in proxy mode. The default value is 1000ms.
+Timeout period for creating a stream when media-server runs in edge mode. The default value is 1000ms.
 
 * -server_idle_timeout
 Connections without data transmission for so many seconds will be closed. The default value is -1(turned off).
@@ -82,7 +82,7 @@ media-server uses gflags options, which is specified by default in the command l
 
 ## Examples
 
-* Run media-server as [origin server](docs/cn/origin_server.md) and [proxy server](docs/cn/proxy_server.md).
+* Run media-server as [origin server](docs/cn/origin_server.md) and [edge server](docs/cn/edge_server.md).
 
 ## Other docs
 
