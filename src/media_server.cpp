@@ -56,7 +56,7 @@ DECLARE_int32(defer_close_second);
 }
 
 int main(int argc, char* argv[]) {
-    google::ParseCommandLineFlags(&argc, &argv, true);
+    GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
     // We create ad-hoc http channels for pulling TS, make sure the connection
     // is not closed immediately for performance considerations.
@@ -157,9 +157,9 @@ int main(int argc, char* argv[]) {
 
     brpc::ServerOptions server_opt;
     if (FLAGS_https) {
-        server_opt.ssl_options.default_cert.certificate = FLAGS_certificate;
-        server_opt.ssl_options.default_cert.private_key = FLAGS_private_key;
-        server_opt.ssl_options.strict_sni= false;
+        server_opt.mutable_ssl_options()->default_cert.certificate = FLAGS_certificate;
+        server_opt.mutable_ssl_options()->default_cert.private_key = FLAGS_private_key;
+        server_opt.mutable_ssl_options()->strict_sni= false;
     }
     server_opt.rtmp_service = rtmp_service;
     server_opt.idle_timeout_sec = FLAGS_server_idle_timeout;
