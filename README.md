@@ -1,6 +1,6 @@
 # media-server
 
-media-server is an industrial-grade live streaming server based on [brpc](https://github.com/brpc/brpc) used in [Live Streaming Service](https://cloud.baidu.com/product/lss.html) of Baidu Cloud.
+media-server is a live streaming server based on [brpc](https://github.com/brpc/brpc) used in [Live Streaming Service](https://cloud.baidu.com/product/lss.html) of Baidu Cloud.
 
 ## Main features
 
