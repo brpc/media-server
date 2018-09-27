@@ -263,7 +263,7 @@ RandomOperation select_work() {
 
 
 int main(int argc, char* argv[]) {
-    google::ParseCommandLineFlags(&argc, &argv, true);
+    GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
     if (FLAGS_dummy_port > 0) {
         brpc::StartDummyServerAt(FLAGS_dummy_port);

@@ -79,7 +79,7 @@ private:
 };
 
 int main(int argc, char* argv[]) {
-    google::ParseCommandLineFlags(&argc, &argv, true);
+    GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
     butil::StringPiece host;
     butil::StringPiece port;

@@ -20,6 +20,7 @@
 #include <deque>
 #include <limits>
 #include <pthread.h>
+#include <signal.h>
 #include <memory>           // std::shared_ptr
 #include "brpc/server.h"    // StartDummyServerAt
 #include "brpc/socket.h"
@@ -610,7 +611,7 @@ void* report_thread(void* arg) {
     return NULL;
 }
 int main(int argc, char* argv[]) {
-    google::ParseCommandLineFlags(&argc, &argv, true);
+    GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
     if (FLAGS_player_num <= 0) {
         LOG(ERROR) << "Invalid player_num=" << FLAGS_player_num;
