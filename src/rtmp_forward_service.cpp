@@ -23,7 +23,6 @@
 #include "butil/endpoint.h"
 #include "butil/containers/flat_map.h"
 #include "butil/containers/pooled_map.h"
-#include "butil/md5.h"
 #include "brpc/builtin/common.h"
 #include "brpc/channel.h"
 #include "brpc/server.h"
