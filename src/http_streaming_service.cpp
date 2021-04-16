@@ -339,7 +339,6 @@ void HttpStreamingServiceImpl::stream_flv(
     //     cntl->http_response().set_status_code(302);
     //     return;
     // }
-    butil::intrusive_ptr<brpc::ProgressiveAttachment> flv_pa;
     bool audio_enabled = true;
     bool video_enabled = true;
     if (!queries.empty()) {
@@ -362,7 +361,8 @@ void HttpStreamingServiceImpl::stream_flv(
     butil::intrusive_ptr<brpc::RtmpStreamBase> flv_stream;
     cntl->http_response().set_content_type("video/x-flv");
     cntl->http_response().SetHeader("Access-Control-Allow-Origin", "*");
-    flv_pa.reset(cntl->CreateProgressiveAttachment(brpc::FORCE_STOP));
+    butil::intrusive_ptr<brpc::ProgressiveAttachment> flv_pa =
+        cntl->CreateProgressiveAttachment(brpc::FORCE_STOP);
     if (flv_pa == NULL) {
         cntl->SetFailed("The socket was just failed");
         return;
@@ -580,7 +580,7 @@ void ProxyHttp::Run() {
             _server_cntl->response_attachment() = _client_cntl.response_attachment();
         }
     } else if (_ts_entry == NULL) {
-        brpc::ProgressiveAttachment* pa =
+        butil::intrusive_ptr<brpc::ProgressiveAttachment> pa =
             _server_cntl->CreateProgressiveAttachment(brpc::FORCE_STOP);
         if (pa == NULL) {
             _server_cntl->SetFailed(brpc::EFAILEDSOCKET,
@@ -588,7 +588,7 @@ void ProxyHttp::Run() {
             return;
         }
         _client_cntl.ReadProgressiveAttachmentBy(
-            new CopyToWriterProgressively(pa));
+            new CopyToWriterProgressively(pa.get()));
     } else {
         _client_cntl.ReadProgressiveAttachmentBy(
             new CopyToTsEntryProgressively(_ts_entry));
@@ -862,7 +862,7 @@ void HttpStreamingServiceImpl::stream_ts(
     if (http_options().proxy_hls &&
         !rtmp_options().proxy_to.empty() &&
         !is_publish_proxy(key)) {
-        brpc::ProgressiveAttachment* pa =
+        butil::intrusive_ptr<brpc::ProgressiveAttachment> pa =
             cntl->CreateProgressiveAttachment(brpc::FORCE_STOP);
         if (pa == NULL) {
             cntl->SetFailed(brpc::EFAILEDSOCKET,
@@ -873,7 +873,7 @@ void HttpStreamingServiceImpl::stream_ts(
         bool did_new = false;
         get_or_new_ts_entry_from_cache(key, seq_num, started_with_kf_in_ts,
                                        &ts_entry, &did_new, ts_duration_ms * get_stored_ts_num(ts_num_per_m3u8));
-        ts_entry->add_downloader(pa, rtmp_options().internal_service, charge_key);
+        ts_entry->add_downloader(pa.get(), rtmp_options().internal_service, charge_key);
         if (!did_new) {
             cntl->http_response().set_content_type("video/MP2T");
             cntl->http_response().SetHeader("Access-Control-Allow-Origin", "*");
